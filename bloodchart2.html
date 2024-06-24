@@ -6,205 +6,266 @@
     <title>Blood Buildup Comparison of Weapons</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
         body {
             font-family: Arial, sans-serif;
-            margin: 40px;
+            color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+            background-image: url("img/g/contentbg.png");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: #1F2027;
+            background-size: cover;
+        }
+        h1,h2 {
+            color: #ddb50d;
+            text-align: center;
+        }
+		nav {
+            background-color: #2a2a2a;
+            overflow: hidden;
+            border-bottom: 2px solid #ddb50d;
+        }
+        nav a {
+            float: left;
+            display: block;
+            color: #f0f0f0;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+            font-size: 17px;
+        }
+        nav a:hover {
+            background-color: #ddb50d;
+            color: #1a1a1a;
+        }
+
+        .container {
+            max-width: 80%;
+            margin: 0 auto;
+            background-color: rgba(0,0,0,0.88);
+            border-radius: 20px;
+            padding-bottom: 2%;
+            padding-top: 2%;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         }
         canvas {
-            max-width: 100%;
+            width: 100%;
             height: 600px; /* Fixed height for the chart */
+			background-color: rgba(255,255,255,0.88);
+			border-radius: 20px;
+		
+        }
+        .chart-container {
+            padding: 20px;
         }
     </style>
 </head>
 <body>
-    <h2>Blood Buildup Comparison of Weapons with Bloodflame Blade vs. Blood Grease</h2>
-    <canvas id="bloodBuildupChart"></canvas>
-
+	    <nav>
+        <a href="index.html">Home</a>
+        <a href="bloodchart2.html">Blood Chart</a>
+    </nav>
+    <div class="container">
+        <h2>Blood Buildup Comparison of Weapons with Bloodflame Blade vs. Blood Grease</h2>
+        <div class="chart-container">
+            <canvas id="bloodBuildupChart"></canvas>
+        </div>
+    </div>
     <script>
-        const ctx = document.getElementById('bloodBuildupChart').getContext('2d');
-        const bloodBuildupChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: [10, 20, 30, 40, 50, 60],
-                datasets: [
-                    {
-                        label: 'Hookclaws (Bloodflame Blade)',
-                        data: [140, 160, 180, 200, 220, 240],
-                        borderColor: 'darkred',
-                        backgroundColor: 'rgba(139, 0, 0, 0.2)',
-                        borderWidth: 2,
-                        fill: true,
-                    },
-                    {
-                        label: 'Hookclaws (Blood Grease)',
-                        data: [125, 140, 155, 170, 185, 200],
-                        borderColor: 'red',
-                        backgroundColor: 'rgba(255, 0, 0, 0.2)',
-                        borderWidth: 2,
-                        fill: true,
-                    },
-                    {
-                        label: 'Uchigatana (Bloodflame Blade)',
-                        data: [125, 145, 165, 185, 205, 225],
-                        borderColor: 'blue',
-                        backgroundColor: 'rgba(0, 0, 255, 0.2)',
-                        borderWidth: 2,
-                        fill: true,
-                    },
-                    {
-                        label: 'Uchigatana (Blood Grease)',
-                        data: [110, 125, 140, 155, 170, 185],
-                        borderColor: 'lightblue',
-                        backgroundColor: 'rgba(173, 216, 230, 0.2)',
-                        borderWidth: 2,
-                        fill: true,
-                    },
-                    {
-                        label: 'Reduvia (Bloodflame Blade)',
-                        data: [130, 150, 170, 190, 210, 230],
-                        borderColor: 'green',
-                        backgroundColor: 'rgba(0, 128, 0, 0.2)',
-                        borderWidth: 2,
-                        fill: true,
-                    },
-                    {
-                        label: 'Reduvia (Blood Grease)',
-                        data: [115, 130, 145, 160, 175, 190],
-                        borderColor: 'lightgreen',
-                        backgroundColor: 'rgba(144, 238, 144, 0.2)',
-                        borderWidth: 2,
-                        fill: true,
-                    },
-                    {
-                        label: 'Morning Star (Bloodflame Blade)',
-                        data: [130, 150, 170, 190, 210, 230],
-                        borderColor: 'orange',
-                        backgroundColor: 'rgba(255, 165, 0, 0.2)',
-                        borderWidth: 2,
-                        fill: true,
-                    },
-                    {
-                        label: 'Morning Star (Blood Grease)',
-                        data: [115, 130, 145, 160, 175, 190],
-                        borderColor: 'darkorange',
-                        backgroundColor: 'rgba(255, 140, 0, 0.2)',
-                        borderWidth: 2,
-                        fill: true,
-                    },
-                    {
-                        label: 'Flamberge (Bloodflame Blade)',
-                        data: [135, 155, 175, 195, 215, 235],
-                        borderColor: 'purple',
-                        backgroundColor: 'rgba(128, 0, 128, 0.2)',
-                        borderWidth: 2,
-                        fill: true,
-                    },
-                    {
-                        label: 'Flamberge (Blood Grease)',
-                        data: [120, 135, 150, 165, 180, 195],
-                        borderColor: 'violet',
-                        backgroundColor: 'rgba(238, 130, 238, 0.2)',
-                        borderWidth: 2,
-                        fill: true,
-                    },
-                    {
-                        label: 'Twinblade (Bloodflame Blade)',
-                        data: [113, 133, 153, 173, 193, 213],
-                        borderColor: 'darkgoldenrod',
-                        backgroundColor: 'rgba(184, 134, 11, 0.2)',
-                        borderWidth: 2,
-                        fill: true,
-                    },
-                    {
-                        label: 'Twinblade (Blood Grease)',
-                        data: [98, 113, 128, 143, 158, 173],
-                        borderColor: 'gold',
-                        backgroundColor: 'rgba(255, 215, 0, 0.2)',
-                        borderWidth: 2,
-                        fill: true,
-                    },
-                    {
-                        label: 'Nightrider Flail (Bloodflame Blade)',
-                        data: [135, 155, 175, 195, 215, 235],
-                        borderColor: 'brown',
-                        backgroundColor: 'rgba(165, 42, 42, 0.2)',
-                        borderWidth: 2,
-                        fill: true,
-                    },
-                    {
-                        label: 'Nightrider Flail (Blood Grease)',
-                        data: [120, 135, 150, 165, 180, 195],
-                        borderColor: 'lightbrown',
-                        backgroundColor: 'rgba(222, 184, 135, 0.2)',
-                        borderWidth: 2,
-                        fill: true,
-                    },
-                    {
-                        label: 'Great Épée (Bloodflame Blade)',
-                        data: [113, 133, 153, 173, 193, 213],
-                        borderColor: 'indigo',
-                        backgroundColor: 'rgba(75, 0, 130, 0.2)',
-                        borderWidth: 2,
-                        fill: true,
-                    },
-                    {
-                        label: 'Great Épée (Blood Grease)',
-                        data: [98, 113, 128, 143, 158, 173],
-                        borderColor: 'darkslateblue',
-                        backgroundColor: 'rgba(72, 61, 139, 0.2)',
-                        borderWidth: 2,
-                        fill: true,
-                    },
-                    {
-                        label: 'Misericorde (Bloodflame Blade)',
-                        data: [113, 133, 153, 173, 193, 213],
-                        borderColor: 'darkcyan',
-                        backgroundColor: 'rgba(0, 139, 139, 0.2)',
-                        borderWidth: 2,
-                        fill: true,
-                    },
-                    {
-                        label: 'Misericorde (Blood Grease)',
-                        data: [98, 113, 128, 143, 158, 173],
-                        borderColor: 'cyan',
-                        backgroundColor: 'rgba(0, 255, 255, 0.2)',
-                        borderWidth: 2,
-                        fill: true,
-                    }
-                ]
-            },
-            options: {
-                scales: {
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Arcane Stat Investment'
-                        }
-                    },
-                    y: {
-                        title: {
-                            display: true,
-                            text: 'Blood Buildup (60 seconds)'
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('bloodBuildupChart').getContext('2d');
+            const bloodBuildupChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [10, 20, 30, 40, 50, 60],
+                    datasets: [
+                        {
+                            label: 'Hookclaws (Bloodflame Blade)',
+                            data: [140, 160, 180, 200, 220, 240],
+                            borderColor: 'darkred',
+                            backgroundColor: 'rgba(139, 0, 0, 0.2)',
+                            borderWidth: 2,
+                            fill: true
                         },
-                        min: 90,
-                        max: 250,
-                        ticks: {
-                            stepSize: 20
+                        {
+                            label: 'Hookclaws (Blood Grease)',
+                            data: [125, 140, 155, 170, 185, 200],
+                            borderColor: 'red',
+                            backgroundColor: 'rgba(255, 0, 0, 0.2)',
+                            borderWidth: 2,
+                            fill: true
+                        },
+                        {
+                            label: 'Uchigatana (Bloodflame Blade)',
+                            data: [125, 145, 165, 185, 205, 225],
+                            borderColor: 'blue',
+                            backgroundColor: 'rgba(0, 0, 255, 0.2)',
+                            borderWidth: 2,
+                            fill: true
+                        },
+                        {
+                            label: 'Uchigatana (Blood Grease)',
+                            data: [110, 125, 140, 155, 170, 185],
+                            borderColor: 'lightblue',
+                            backgroundColor: 'rgba(173, 216, 230, 0.2)',
+                            borderWidth: 2,
+                            fill: true
+                        },
+                        {
+                            label: 'Morning Star (Bloodflame Blade)',
+                            data: [130, 150, 170, 190, 210, 230],
+                            borderColor: 'orange',
+                            backgroundColor: 'rgba(255, 165, 0, 0.2)',
+                            borderWidth: 2,
+                            fill: true
+                        },
+                        {
+                            label: 'Morning Star (Blood Grease)',
+                            data: [115, 130, 145, 160, 175, 190],
+                            borderColor: 'darkorange',
+                            backgroundColor: 'rgba(255, 140, 0, 0.2)',
+                            borderWidth: 2,
+                            fill: true
+                        },
+                        {
+                            label: 'Flamberge (Bloodflame Blade)',
+                            data: [135, 155, 175, 195, 215, 235],
+                            borderColor: 'purple',
+                            backgroundColor: 'rgba(128, 0, 128, 0.2)',
+                            borderWidth: 2,
+                            fill: true
+                        },
+                        {
+                            label: 'Flamberge (Blood Grease)',
+                            data: [120, 135, 150, 165, 180, 195],
+                            borderColor: 'violet',
+                            backgroundColor: 'rgba(238, 130, 238, 0.2)',
+                            borderWidth: 2,
+                            fill: true
+                        },
+                        {
+                            label: 'Twinblade (Bloodflame Blade)',
+                            data: [113, 133, 153, 173, 193, 213],
+                            borderColor: 'darkgoldenrod',
+                            backgroundColor: 'rgba(184, 134, 11, 0.2)',
+                            borderWidth: 2,
+                            fill: true
+                        },
+                        {
+                            label: 'Twinblade (Blood Grease)',
+                            data: [98, 113, 128, 143, 158, 173],
+                            borderColor: 'gold',
+                            backgroundColor: 'rgba(255, 215, 0, 0.2)',
+                            borderWidth: 2,
+                            fill: true
+                        },
+                        {
+                            label: 'Nightrider Flail (Bloodflame Blade)',
+                            data: [135, 155, 175, 195, 215, 235],
+                            borderColor: 'brown',
+                            backgroundColor: 'rgba(165, 42, 42, 0.2)',
+                            borderWidth: 2,
+                            fill: true
+                        },
+                        {
+                            label: 'Nightrider Flail (Blood Grease)',
+                            data: [120, 135, 150, 165, 180, 195],
+                            borderColor: 'lightbrown',
+                            backgroundColor: 'rgba(222, 184, 135, 0.2)',
+                            borderWidth: 2,
+                            fill: true
+                        },
+                        {
+                            label: 'Great Épée (Bloodflame Blade)',
+                            data: [113, 133, 153, 173, 193, 213],
+                            borderColor: 'indigo',
+                            backgroundColor: 'rgba(75, 0, 130, 0.2)',
+                            borderWidth: 2,
+                            fill: true
+                        },
+                        {
+                            label: 'Great Épée (Blood Grease)',
+                            data: [98, 113, 128, 143, 158, 173],
+                            borderColor: 'darkslateblue',
+                            backgroundColor: 'rgba(72, 61, 139, 0.2)',
+                            borderWidth: 2,
+                            fill: true
+                        },
+                        {
+                            label: 'Misericorde (Bloodflame Blade)',
+                            data: [113, 133, 153, 173, 193, 213],
+                            borderColor: 'darkcyan',
+                            backgroundColor: 'rgba(0, 139, 139, 0.2)',
+                            borderWidth: 2,
+                            fill: true
+                        },
+                        {
+                            label: 'Misericorde (Blood Grease)',
+                            data: [98, 113, 128, 143, 158, 173],
+                            borderColor: 'cyan',
+                            backgroundColor: 'rgba(0, 255, 255, 0.2)',
+                            borderWidth: 2,
+                            fill: true
                         }
-                    }
+                    ]
                 },
-                plugins: {
-                    legend: {
-                        display: true,
-                        position: 'top'
+                options: {
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Arcane Stat Investment'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Blood Buildup (60 seconds)'
+                            },
+                            min: 90,
+                            max: 250,
+                            ticks: {
+                                stepSize: 20
+                            }
+                        }
                     },
-                    tooltip: {
-                        enabled: true
-                    }
-                },
-                responsive: true,
-                maintainAspectRatio: true
-            }
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top',
+                            onHover: function(event, legendItem) {
+                                const index = legendItem.datasetIndex;
+                                const chart = legendItem.chart;
+                                chart.data.datasets.forEach((dataset, i) => {
+                                    if (i !== index) {
+                                        chart.getDatasetMeta(i).hidden = true;
+                                        chart.getDatasetMeta(i).opacity = 0.5;
+                                    }
+                                });
+                                chart.update();
+                            },
+                            onLeave: function(event, legendItem) {
+                                const chart = legendItem.chart;
+                                chart.data.datasets.forEach((dataset) => {
+                                    dataset.hidden = null;
+                                    dataset.opacity = 1;
+                                });
+                                chart.update();
+                            }
+                        },
+                        tooltip: {
+                            enabled: true
+                        }
+                    },
+                    responsive: true,
+                    maintainAspectRatio: true
+                }
+            });
         });
     </script>
 </body>
