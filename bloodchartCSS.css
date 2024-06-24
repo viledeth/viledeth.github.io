@@ -5,8 +5,12 @@ canvas {
             height: 600px; /* Fixed height for the chart */
 			background-color: rgba(255,255,255,0.88);
 			border-radius: 20px;
+	    display: flex;
+    	justify-content: center;
+    	align-items: center;
 		
         }
         .chart-container {
-            padding: 20px;
+            padding: 30px;
+			align-content: center;
         }
