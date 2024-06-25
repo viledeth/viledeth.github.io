@@ -1,0 +1,107 @@
+@charset "utf-8";
+/* CSS Document */
+/* General styles */
+.logo-link {
+    display: flex;
+    align-items: center;
+    height: 100%; /* Ensure the logo link adheres to the nav height */
+}
+
+.logo {
+    max-height: 100%; /* Scale the logo to fit the container */
+    height: auto; /* Maintain aspect ratio */
+    width: auto; /* Maintain aspect ratio */
+	margin-left:20%;
+	margin-top: -10px;
+}
+
+/* Nav container */
+nav {
+    /*background-color: rgba(42,42,42,0.90);*/
+    overflow: hidden;
+    border-bottom: 2px solid #A66C00;
+	/*border-bottom: 2px solid #ddb50d;*/
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 10px 10px 0 0;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    padding-top: 50px;
+    background-image: url("img/g/headerbgmenu.png");
+    background-position: top center;
+    background-size: contain;
+	background-repeat: no-repeat;
+ 	background-color: #000;
+	padding-left:20%;
+	
+}
+
+/* Nav-links container */
+nav .nav-links {
+    display: flex;
+    align-items: flex-end;
+	float:left;
+	margin-top:auto;
+	width:80%;
+	margin-left:auto;
+	justify-content:flex-start;
+	margin-right:auto;
+	padding-right:4%;
+	
+}
+
+/* Styles specific to links inside nav-links container */
+nav .nav-links a {
+    color: #f0f0f0;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+    font-size: 17px;
+    margin-bottom: 0;
+    border-radius: 0;
+    transition: background-color 0.3s ease;
+	background-color: rgba(0,0,0,0.40);/**/
+}
+
+nav .nav-links a:hover {
+    background-color: rgba(166,108,0,0.95);
+    /*color: #1a1a1a;*/
+	text-shadow: 0px 0px 0px black !important;
+}
+
+/* Apply rounded corners based on position within nav-links */
+nav .nav-links a:first-of-type {
+    border-top-left-radius: 10px;
+}
+
+nav .nav-links a:last-of-type {
+    border-top-right-radius: 10px;
+}
+
+nav .nav-links a:only-of-type {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+nav .nav-links .currentPage{
+	background-color: rgba(166,108,0,1)!important;
+	font-weight: bold;
+	/*text-shadow: 0px 2px 0px black;*/
+	color: #f0f0f0!important;
+	/*border-top:2px solid black;*/
+	/*border-top-left-radius: 10px;
+    border-top-right-radius: 10px;*/
+}
+nav .nav-links .currentPage:first-of-type{
+	/*border-top:2px solid black;
+	border-left:2px solid black;*/
+}
+nav .nav-links .currentPage:last-of-type{
+	/*border-top:2px solid black;
+	border-right:2px solid black;*/
+}
+nav .nav-links .currentPage:only-of-type{
+	/*border-top:2px solid black;*/
+}

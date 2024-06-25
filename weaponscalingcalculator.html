@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weapon Scaling Calculator</title>
+    <link href="mainCSS.css" rel="stylesheet" type="text/css">
+	<link href="navCSS.css" rel="stylesheet" type="text/css">
+    <link href="weaponscalingcalculator.css" rel="stylesheet" type="text/css">
+    <link href="footerCSS.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    		                <nav id="header">
+        <a href="index.html" class="logo-link">
+            <img src="img/g/altlogo.png" alt="Rune Level Logo" class="logo"/>
+        </a>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="bleedchart.html">Bleed Chart</a>
+			<a href="weaponscalingcalculator.html" class="currentPage">Weapon Scaling Calculator</a>
+        </div>
+    </nav>
+	
+<div class="container">
+        <h2>Weapon Scaling Calculator</h2>
+        <form id="weaponCalculatorForm">
+          <div class="form-group-column">
+              <h4 class="hAlignment">Player Stats - 
+              (must check off one box)</h4>
+              <div class="form-group">
+                <label for="strength">Strength:</label>
+                <input type="number" id="strength" name="strength" min="0" max="99"  value="0" pattern="{2}" class="player-stat">
+                <input type="checkbox" id="useStrength" name="useStrength" class="player-stat">
+                </div>
+              <div class="form-group">
+                <label for="dexterity">Dexterity:</label>
+                <input type="number" id="dexterity" name="dexterity" min="0" max="99" value="0" class="player-stat">
+                <input type="checkbox" id="useDexterity" name="useDexterity" class="player-stat">
+                </div>
+              <div class="form-group">
+                <label for="intelligence">Intelligence:</label>
+                <input type="number" id="intelligence" name="intelligence" min="0" max="99" value="0" class="player-stat">
+                <input type="checkbox" id="useIntelligence" name="useIntelligence" class="player-stat">
+                </div>
+              <div class="form-group">
+                <label for="faith">Faith:</label>
+                <input type="number" id="faith" name="faith" min="0" max="99" value="0" class="player-stat">
+                <input type="checkbox" id="useFaith" name="useFaith" class="player-stat">
+                </div>
+              <div class="form-group">
+                <label for="arcane">Arcane:</label>
+                <input type="number" id="arcane" name="arcane" min="0" max="99" value="0" class="player-stat">
+                <input type="checkbox" id="useArcane" name="useArcane" class="player-stat">
+                </div>
+            </div>
+            <div class="form-group-column">
+				<h4 class="hAlignment">Player Stats - 
+              (must check off one box)</h4>
+              <div class="form-group">
+                <label for="baseDamage">Base Weapon Damage:</label>
+                <input type="number" id="baseDamage" name="baseDamage" min="0" value="0" class="weaponGradeDamageInput">
+              </div>
+              <div class="form-group">
+                <label for="strengthScaling">Strength Scaling:</label>
+                <input type="text" id="strengthScaling" name="strengthScaling" maxlength="1" placeholder="E-S" class="weaponGrade">
+              </div>
+              <div class="form-group">
+                <label for="dexterityScaling">Dexterity Scaling:</label>
+                <input type="text" id="dexterityScaling" name="dexterityScaling" maxlength="1" placeholder="E-S" class="weaponGrade">
+              </div>
+              <div class="form-group">
+                <label for="intelligenceScaling">Intelligence Scaling:</label>
+                <input type="text" id="intelligenceScaling" name="intelligenceScaling" maxlength="1" placeholder="E-S" class="weaponGrade">
+              </div>
+              <div class="form-group">
+                <label for="faithScaling">Faith Scaling:</label>
+                <input type="text" id="faithScaling" name="faithScaling" maxlength="1" placeholder="E-S" class="weaponGrade">
+              </div>
+              <div class="form-group">
+                <label for="arcaneScaling">Arcane Scaling:</label>
+                <input type="text" id="arcaneScaling" name="arcaneScaling" maxlength="1" placeholder="E-S" class="weaponGrade">
+              </div>
+            </div>
+        </form>
+		<button type="button" id="calculateButton">Calculate</button>
+        <div id="results">
+            <h5>Weapon Damage Output:</h5>
+            <p id="damageOutput">0</p>
+        </div>
+	<footer><img src="img/g/footerhero_01.png"  alt="Rune Level footer - left" class="crescent" id="crescentLeft"/><img src="img/g/footerhero_02.png"  alt="Rune Level footer - right" class="crescent" id="crescentRight"/></footer>
+    </div>
+	
+    <script src="weaponscalingcalculator.js"></script>
+</body>
+</html>
