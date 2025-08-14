@@ -173,6 +173,42 @@
             border-left: 4px solid #f44336;
         }
 
+        /* Colorblind Accessibility Mode */
+        .colorblind-mode .damage-effective {
+            background: rgba(33, 150, 243, 0.2);
+            border-left: 4px solid #2196f3;
+        }
+
+        .colorblind-mode .damage-neutral {
+            background: rgba(158, 158, 158, 0.2);
+            border-left: 4px solid #9e9e9e;
+        }
+
+        .colorblind-mode .damage-resistant {
+            background: rgba(255, 152, 0, 0.2);
+            border-left: 4px solid #ff9800;
+        }
+
+        .accessibility-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,107,53,0.9);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .accessibility-toggle:hover {
+            background: rgba(255,107,53,1);
+            transform: scale(1.05);
+        }
+
         .boss-phases {
             margin: 15px 0;
         }
@@ -335,8 +371,20 @@
     </style>
 </head>
 <body>
+    <button class="accessibility-toggle" id="colorblind-toggle">🎨 Colorblind Mode</button>
+    
     <div class="container">
         <h1>🔥 Killing Floor 2 - Mechanics Reference 🔥</h1>
+        
+        <!-- 
+        DEPLOYMENT NOTE: 
+        This SPA includes localStorage preference saving for the colorblind toggle.
+        In Claude.ai artifacts, localStorage is not available, so preferences reset on refresh.
+        When you deploy this to your own environment, uncomment the localStorage lines in:
+        - _loadColorblindPreference()
+        - _saveColorblindPreference() 
+        This will enable persistent user preferences across visits.
+        -->
         
         <div class="tab-container">
             <div class="tab-nav">
@@ -357,6 +405,42 @@
                     <button class="filter-btn" data-filter="medium">Medium</button>
                     <button class="filter-btn" data-filter="large">Large</button>
                 </div>
+                
+                <div class="damage-legend" style="background: rgba(255,255,255,0.1); border-radius: 8px; padding: 15px; margin-bottom: 20px; border-left: 4px solid #ff6b35;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <h4 style="color: #ff6b35; margin: 0;">🎯 Damage Effectiveness Guide:</h4>
+                        <small style="opacity: 0.7;"><em>Colorblind toggle available top-right →</em></small>
+                    </div>
+                    <div id="standard-legend" style="display: flex; gap: 20px; flex-wrap: wrap;">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span style="width: 20px; height: 20px; background: rgba(76, 175, 80, 0.8); border-radius: 50%; display: inline-block;"></span>
+                            <span>🟢 <strong>GREEN</strong> = HIGHLY EFFECTIVE (Double+ Damage)</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span style="width: 20px; height: 20px; background: rgba(255, 193, 7, 0.8); border-radius: 50%; display: inline-block;"></span>
+                            <span>🟡 <strong>YELLOW</strong> = NORMAL (Standard Damage)</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span style="width: 20px; height: 20px; background: rgba(244, 67, 54, 0.8); border-radius: 50%; display: inline-block;"></span>
+                            <span>🔴 <strong>RED</strong> = RESISTANT (Reduced Damage)</span>
+                        </div>
+                    </div>
+                    <div id="colorblind-legend" style="display: none; gap: 20px; flex-wrap: wrap;">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span style="width: 20px; height: 20px; background: rgba(33, 150, 243, 0.8); border-radius: 50%; display: inline-block;"></span>
+                            <span>⬆️ <strong>BLUE</strong> = HIGHLY EFFECTIVE (Double+ Damage)</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span style="width: 20px; height: 20px; background: rgba(158, 158, 158, 0.8); border-radius: 50%; display: inline-block;"></span>
+                            <span>➡️ <strong>GRAY</strong> = NORMAL (Standard Damage)</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span style="width: 20px; height: 20px; background: rgba(255, 152, 0, 0.8); border-radius: 50%; display: inline-block;"></span>
+                            <span>⬇️ <strong>ORANGE</strong> = RESISTANT (Reduced Damage)</span>
+                        </div>
+                    </div>
+                </div>
+                
                 <div class="card-grid" id="enemy-grid"></div>
             </div>
 
@@ -364,6 +448,13 @@
                 <div class="search-container">
                     <input type="text" class="search-input" placeholder="Search bosses..." id="boss-search">
                 </div>
+                
+                <div class="damage-legend" style="background: rgba(255,255,255,0.1); border-radius: 8px; padding: 15px; margin-bottom: 20px; border-left: 4px solid #ff6b35;">
+                    <h4 style="color: #ff6b35; margin-bottom: 10px;">👑 Boss Damage Rankings:</h4>
+                    <p style="margin: 0;"><strong>Numbers = Priority Order:</strong> 1 = Most Effective → 3 = Least Effective</p>
+                    <p style="margin: 5px 0 0 0; font-size: 0.9em; opacity: 0.8;"><em>Use the colorblind toggle (top-right) for accessibility options</em></p>
+                </div>
+                
                 <div class="card-grid" id="boss-grid"></div>
             </div>
 
@@ -827,9 +918,34 @@
             constructor() {
                 this._currentTab = 'enemies';
                 this._filteredData = {};
+                this._colorblindMode = this._loadColorblindPreference();
                 this._initializeUI();
                 this._bindEvents();
                 this._renderInitialContent();
+                this._applyInitialColorblindState();
+            }
+
+            _loadColorblindPreference() {
+                // Note: localStorage not available in Claude.ai artifacts
+                // Uncomment line below when deploying to your own environment:
+                return localStorage.getItem('kf2_colorblind_mode') === 'true';
+                return false; // Default for artifact environment
+            }
+
+            _saveColorblindPreference(enabled) {
+                // Note: localStorage not available in Claude.ai artifacts  
+                // Uncomment line below when deploying to your own environment:
+                 localStorage.setItem('kf2_colorblind_mode', enabled.toString());
+                console.log(`Colorblind mode preference would be saved: ${enabled}`);
+            }
+
+            _applyInitialColorblindState() {
+                if (this._colorblindMode) {
+                    $('body').addClass('colorblind-mode');
+                    $('#colorblind-toggle').text('🎨 Standard Mode');
+                    $('#standard-legend').hide();
+                    $('#colorblind-legend').show();
+                }
             }
 
             _initializeUI() {
@@ -839,11 +955,38 @@
                     this._switchTab(targetTab);
                 });
 
+                // Colorblind accessibility toggle
+                $('#colorblind-toggle').on('click', () => {
+                    this._toggleColorblindMode();
+                });
+
                 // Search functionality
                 this._setupSearchHandlers();
                 
                 // Filter functionality
                 this._setupFilterHandlers();
+            }
+
+            _toggleColorblindMode() {
+                this._colorblindMode = !this._colorblindMode;
+                
+                // Save preference for future visits
+                this._saveColorblindPreference(this._colorblindMode);
+                
+                if (this._colorblindMode) {
+                    $('body').addClass('colorblind-mode');
+                    $('#colorblind-toggle').text('🎨 Standard Mode');
+                    $('#standard-legend').hide();
+                    $('#colorblind-legend').show();
+                } else {
+                    $('body').removeClass('colorblind-mode');
+                    $('#colorblind-toggle').text('🎨 Colorblind Mode');
+                    $('#standard-legend').show();
+                    $('#colorblind-legend').hide();
+                }
+                
+                // Re-render current tab content to update visual indicators
+                this._renderTabContent(this._currentTab);
             }
 
             _bindEvents() {
@@ -931,10 +1074,39 @@
                     .map(([type, value]) => {
                         const effectiveness = value > 1 ? 'effective' : value < 1 ? 'resistant' : 'neutral';
                         const percentage = Math.round(value * 100);
+                        let statusText = '';
+                        let statusIcon = '';
+                        
+                        if (this._colorblindMode) {
+                            // Colorblind-friendly indicators
+                            if (value > 1) {
+                                statusText = 'HIGHLY EFFECTIVE';
+                                statusIcon = '⬆️';
+                            } else if (value < 1) {
+                                statusText = 'RESISTANT';
+                                statusIcon = '⬇️';
+                            } else {
+                                statusText = 'NORMAL';
+                                statusIcon = '➡️';
+                            }
+                        } else {
+                            // Standard color indicators
+                            if (value > 1) {
+                                statusText = 'HIGHLY EFFECTIVE';
+                                statusIcon = '🟢';
+                            } else if (value < 1) {
+                                statusText = 'RESISTANT';
+                                statusIcon = '🔴';
+                            } else {
+                                statusText = 'NORMAL';
+                                statusIcon = '🟡';
+                            }
+                        }
+                        
                         return `
                             <div class="damage-item damage-${effectiveness}">
-                                <span>${type.charAt(0).toUpperCase() + type.slice(1)}</span>
-                                <span>${percentage}%</span>
+                                <span>${statusIcon} ${type.charAt(0).toUpperCase() + type.slice(1)}</span>
+                                <span>${percentage}% - ${statusText}</span>
                             </div>
                         `;
                     }).join('');
@@ -955,7 +1127,7 @@
                             ${enemy.special ? `<p><strong>Special:</strong> ${enemy.special}</p>` : ''}
                             
                             <div class="damage-list">
-                                <h4>Damage Resistances:</h4>
+                                <h4>Damage Effectiveness Against This Enemy:</h4>
                                 ${resistancesList}
                             </div>
                             
