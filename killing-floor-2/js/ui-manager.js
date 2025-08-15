@@ -13,14 +13,14 @@ class _UIManager {
     _loadColorblindPreference() {
         // Note: localStorage not available in Claude.ai artifacts
         // Uncomment line below when deploying to your own environment:
-        // return localStorage.getItem('kf2_colorblind_mode') === 'true';
+        return localStorage.getItem('kf2_colorblind_mode') === 'true';
         return false; // Default for artifact environment
     }
 
     _saveColorblindPreference(enabled) {
         // Note: localStorage not available in Claude.ai artifacts  
         // Uncomment line below when deploying to your own environment:
-        // localStorage.setItem('kf2_colorblind_mode', enabled.toString());
+        localStorage.setItem('kf2_colorblind_mode', enabled.toString());
         console.log(`Colorblind mode preference would be saved: ${enabled}`);
     }
 
