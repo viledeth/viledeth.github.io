@@ -42,11 +42,11 @@ const _kf2Data = {
             name: "Crawler",
             type: "lesser",
             health: { head: 65, body: 130 },
-            resistances: { ballistic: 1.0, explosive: 1.0, fire: 0.5 },
-            weaknesses: ["Fire damage", "Explosives"],
-            tactics: "Weak to fire. Elite variants explode into gas when killed by body shots.",
+            resistances: { ballistic: 1.0, explosive: 1.0, fire: 1.0, slashing: 0.5, microwave: 0.5 },
+            weaknesses: ["Ballistic", "Toxic", "Bludgeon"],
+            tactics: "While not weak to fire damage directly, they panic easily from fire. Explosive weapons are effective due to large groups.",
             shrinkModifier: 2.0,
-            special: "Elite version creates toxic gas on death"
+            special: "Elite version creates toxic gas on death, prone to panic"
         },
         {
             name: "Gorefast",
@@ -62,7 +62,7 @@ const _kf2Data = {
             type: "medium",
             health: { head: 120, body: 390 },
             resistances: { ballistic: 0.75, explosive: 1.0, fire: 1.0 },
-            weaknesses: ["Explosives", "High damage single shots"],
+            weaknesses: ["Head shots", "High damage single shots", "Bludgeon", "Slashing"],
             tactics: "Dual blades, high damage. Can parry shots. Use explosives or overwhelming firepower.",
             shrinkModifier: 0.4,
             special: "Can block/parry incoming shots"
@@ -110,32 +110,32 @@ const _kf2Data = {
         {
             name: "Quarter Pound",
             type: "large",
-            health: { head: 600, body: 1200 },
-            resistances: { ballistic: 1.0, explosive: 0.75, fire: 1.0 },
-            weaknesses: ["High damage weapons", "Coordinated team fire"],
-            tactics: "Mini Fleshpound. Less health but still dangerous. Can rage. Focus fire to down quickly.",
-            shrinkModifier: 0.2,
-            special: "Rage mode increases speed and damage"
+            health: { head: 1200, body: 1720 },
+            resistances: { microwave: 0.25, fire: 0.75 },
+            weaknesses: ["Head shots", "Ballistic"],
+            tactics: "Much faster than a Fleshpound, they swarm in groups. Use high-damage, high-rate-of-fire weapons. Headshots are the most effective.",
+            shrinkModifier: 0.1,
+            special: "Spawns in packs and are always enraged"
         },
         {
             name: "Scrake",
-            type: "large", 
+            type: "large",
             health: { head: 1600, body: 4800 },
-            resistances: { ballistic: 1.0, explosive: 0.25, fire: 1.0, ballistic_shell: 4.0 },
+            resistances: { explosive_fragmentation: 0.25, fire: 1.0 },
             weaknesses: ["RPG ballistic impact", "High DPS weapons", "Head shots"],
-            tactics: "Resistant to explosives but vulnerable to RPG ballistic impact. Don't enrage - use high DPS for quick kills.",
+            tactics: "Resistant to explosive fragmentation damage, but vulnerable to RPG ballistic impact. Don't enrage—use high DPS for quick kills.",
             shrinkModifier: 0.1,
             special: "Chainsaw rage mode triggered by body damage"
         },
         {
             name: "Fleshpound",
             type: "large",
-            health: { head: 1500, body: 6000 },
-            resistances: { ballistic: 1.0, explosive: 1.0, fire: 1.0 },
-            weaknesses: ["EMP grenades", "Coordinated high DPS"],
-            tactics: "Extremely dangerous when raged. Use EMP to calm down. Requires team coordination.",
+            health: { head: 1600, body: 4800 },
+            resistances: { fire: 0.75, microwave: 0.75, explosive: 1.25 },
+            weaknesses: ["Explosive", "Head shots", "Bludgeon"],
+            tactics: "Resistant to fire and microwave damage. Periodically rages, but the rage can be delayed with head damage. Head shots and explosives are the most effective.",
             shrinkModifier: 0.1,
-            special: "Pounds fists to build rage, EMP can reset rage"
+            special: "Can rage on sight or after taking damage"
         }
     ],
     
