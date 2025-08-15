@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Killing Floor 2 - Mechanics Reference</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+    <button class="accessibility-toggle" id="colorblind-toggle">🎨 Colorblind Mode</button>
+    
+    <div class="container">
+        <h1>🔥 Killing Floor 2 - Mechanics Reference 🔥</h1>
+        
+        <div class="tab-container">
+            <div class="tab-nav">
+                <button class="tab-btn active" data-tab="enemies">Enemies</button>
+                <button class="tab-btn" data-tab="bosses">Bosses</button>
+                <button class="tab-btn" data-tab="weapons">Weapons</button>
+                <button class="tab-btn" data-tab="damage-types">Damage Types</button>
+                <button class="tab-btn" data-tab="mechanics">Core Mechanics</button>
+                <button class="tab-btn" data-tab="tactics">Tactical Guide</button>
+            </div>
+
+            <div id="enemies" class="tab-content active">
+                <div class="search-container">
+                    <input type="text" class="search-input" placeholder="Search enemies..." id="enemy-search">
+                </div>
+                <div class="filters">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="lesser">Lesser</button>
+                    <button class="filter-btn" data-filter="medium">Medium</button>
+                    <button class="filter-btn" data-filter="large">Large</button>
+                </div>
+                
+                <div class="damage-legend">
+                    <div class="legend-header">
+                        <h4>🎯 Damage Effectiveness Guide:</h4>
+                        <small><em>Colorblind toggle available top-right →</em></small>
+                    </div>
+                    <div id="standard-legend" class="legend-content">
+                        <div class="legend-item">
+                            <span class="legend-dot green"></span>
+                            <span>🟢 <strong>GREEN</strong> = HIGHLY EFFECTIVE (Double+ Damage)</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-dot yellow"></span>
+                            <span>🟡 <strong>YELLOW</strong> = NORMAL (Standard Damage)</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-dot red"></span>
+                            <span>🔴 <strong>RED</strong> = RESISTANT (Reduced Damage)</span>
+                        </div>
+                    </div>
+                    <div id="colorblind-legend" class="legend-content" style="display: none;">
+                        <div class="legend-item">
+                            <span class="legend-dot blue"></span>
+                            <span>⬆️ <strong>BLUE</strong> = HIGHLY EFFECTIVE (Double+ Damage)</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-dot gray"></span>
+                            <span>➡️ <strong>GRAY</strong> = NORMAL (Standard Damage)</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-dot orange"></span>
+                            <span>⬇️ <strong>ORANGE</strong> = RESISTANT (Reduced Damage)</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card-grid" id="enemy-grid"></div>
+            </div>
+
+            <div id="bosses" class="tab-content">
+                <div class="search-container">
+                    <input type="text" class="search-input" placeholder="Search bosses..." id="boss-search">
+                </div>
+                
+                <div class="damage-legend">
+                    <h4>👑 Boss Damage Rankings:</h4>
+                    <p><strong>Numbers = Priority Order:</strong> 1 = Most Effective → 3 = Least Effective</p>
+                    <p><em>Use the colorblind toggle (top-right) for accessibility options</em></p>
+                </div>
+                
+                <div class="card-grid" id="boss-grid"></div>
+            </div>
+
+            <div id="weapons" class="tab-content">
+                <div class="search-container">
+                    <input type="text" class="search-input" placeholder="Search weapons..." id="weapon-search">
+                </div>
+                <div class="filters">
+                    <button class="filter-btn active" data-filter="all">All Perks</button>
+                    <button class="filter-btn" data-filter="commando">Commando</button>
+                    <button class="filter-btn" data-filter="support">Support</button>
+                    <button class="filter-btn" data-filter="demolitionist">Demolitionist</button>
+                    <button class="filter-btn" data-filter="gunslinger">Gunslinger</button>
+                    <button class="filter-btn" data-filter="firebug">Firebug</button>
+                    <button class="filter-btn" data-filter="berserker">Berserker</button>
+                    <button class="filter-btn" data-filter="medic">Medic</button>
+                    <button class="filter-btn" data-filter="sharpshooter">Sharpshooter</button>
+                    <button class="filter-btn" data-filter="swat">SWAT</button>
+                    <button class="filter-btn" data-filter="survivalist">Survivalist</button>
+                </div>
+                
+                <div class="damage-legend">
+                    <h4>🔫 Weapon Effectiveness Guide:</h4>
+                    <p><strong>"Best Against" rankings are automatically calculated</strong> based on damage type vs enemy resistances</p>
+                    <p><em>Higher effectiveness = weapon deals more damage to that enemy type</em></p>
+                </div>
+                
+                <div class="card-grid" id="weapon-grid"></div>
+            </div>
+
+            <div id="damage-types" class="tab-content">
+                <div class="search-container">
+                    <input type="text" class="search-input" placeholder="Search damage types..." id="damage-search">
+                </div>
+                <div class="card-grid" id="damage-grid"></div>
+            </div>
+
+            <div id="mechanics" class="tab-content">
+                <div class="mechanics-grid" id="mechanics-grid"></div>
+            </div>
+
+            <div id="tactics" class="tab-content">
+                <div class="mechanics-grid" id="tactics-grid"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load scripts in order -->
+    <script src="js/weapons-data.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/calculator.js"></script>
+    <script src="js/ui-manager.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
